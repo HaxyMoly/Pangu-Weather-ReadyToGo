@@ -1,0 +1,7 @@
+numpy
+onnx
+onnxruntime-gpu
+cdsapi
+netCDF4
+os
+ncvue
