@@ -17,7 +17,11 @@ model_used = 'models/pangu_weather_24.onnx' # 24h
 # model_used = 'models/pangu_weather_1.onnx' # 1h
 
 # The directory for forecasts
-forecast_dir = 'forecasts/' + date + '-' + time + '/'
+forecast_dir = os.path.join(
+    os.path.join(os.getcwd(), "forecasts"),
+    ## replace to prevent invaild char ":"
+    date + "-" + time.replace(":", "-"),
+)
 
 # Load the model
 model = onnx.load(model_used)
