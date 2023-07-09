@@ -7,7 +7,11 @@ date = '2023-07-02'
 time = '23:00' 
 
 # The directory for forecasts
-forecast_dir = 'forecasts/' + date + '-' + time + '/'
+forecast_dir = os.path.join(
+    os.path.join(os.getcwd(), "forecasts"), 
+    ## replace to prevent invaild char ":"
+    date + "-" + time.replace(":", "-")
+)
 surface_file = os.path.join(forecast_dir, 'output_surface.npy')
 upper_file = os.path.join(forecast_dir, 'output_upper.npy')
 
