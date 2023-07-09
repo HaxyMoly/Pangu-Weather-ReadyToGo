@@ -10,7 +10,12 @@ date = '2023-07-02'
 time = '23:00'
 
 # The directory for forecastsd
-forecast_dir = 'forecasts/' + date + '-' + time + '/'
+## Use os.path.join to give cross platform compatibility
+forecast_dir = os.path.join(
+    os.path.join(os.getcwd(), "forecasts"), 
+    ## replace to prevent invaild char ":"
+    date + "-" + time.replace(":", "-")
+)
 os.makedirs(forecast_dir)
 
 # The variables required
