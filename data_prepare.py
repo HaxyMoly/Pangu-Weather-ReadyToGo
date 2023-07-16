@@ -40,7 +40,7 @@ c.retrieve('reanalysis-era5-single-levels', {
     'date': date_time.strftime("%Y-%m-%d"),
     'time': date_time.strftime("%H:%M"),
     'area': area,
-}, os.path.join(forecast_dir , 'surface.nc')
+}, os.path.join(forecast_dir , 'surface.nc'))
 
 # Download the upper air data
 c.retrieve('reanalysis-era5-pressure-levels', {
