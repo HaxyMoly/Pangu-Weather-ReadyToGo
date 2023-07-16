@@ -1,7 +1,6 @@
 numpy
-onnx
+onnx==1.13.1
 onnxruntime-gpu
 cdsapi
 netCDF4
-os
 ncvue
