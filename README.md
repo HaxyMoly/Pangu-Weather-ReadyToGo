@@ -88,7 +88,7 @@ python forecast_decode.py
 ```
 7. Navigate to the forecasting directory to visualize the results
 ```bash
-cd forecasts/2023-07-09-23-00to2023-07-17-23-00
+cd outputs/2023-07-09-23-00to2023-07-17-23-00
 # Visualize the land surface forecast
 ncvue output_surface.nc
 # Visualize the upper air forecast
@@ -194,7 +194,7 @@ python forecast_decode.py
 ```
 7. 进入预测文件路径可视化结果
 ```bash
-cd forecasts/2023-07-09-23-00to2023-07-17-23-00
+cd outputs/2023-07-09-23-00to2023-07-17-23-00
 # 可视化预测地表数据
 ncvue output_surface.nc
 # 或可视化预测大气数据
