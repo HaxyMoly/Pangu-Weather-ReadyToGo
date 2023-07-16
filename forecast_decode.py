@@ -31,6 +31,7 @@ os.makedirs(outputs_dir,exist_ok=True)
 
 # get all files that need to be decoded
 for file in os.listdir(results_dir):
+    print(file)
     if file.endswith(".npy"):
         if file.startswith("output_surface"):
             # decode surface data
