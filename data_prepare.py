@@ -10,7 +10,7 @@ c = cdsapi.Client()
 date_time = datetime(
     year=2023, 
     month=7, 
-    day=9,
+    day=10,
     hour=23,
     minute=0)
 
@@ -40,7 +40,7 @@ c.retrieve('reanalysis-era5-single-levels', {
     'date': date_time.strftime("%Y-%m-%d"),
     'time': date_time.strftime("%H:%M"),
     'area': area,
-}, os.path.join(forecast_dir + 'surface.nc'))
+}, os.path.join(forecast_dir , 'surface.nc')
 
 # Download the upper air data
 c.retrieve('reanalysis-era5-pressure-levels', {
@@ -51,7 +51,7 @@ c.retrieve('reanalysis-era5-pressure-levels', {
     'date': date_time.strftime("%Y-%m-%d"),
     'time': date_time.strftime("%H:%M"),
     'area': area,
-}, os.path.join(forecast_dir + 'upper.nc'))
+}, os.path.join(forecast_dir , 'upper.nc'))
 
 # Convert the surface data to npy
 surface_data = np.zeros((4, 721, 1440), dtype=np.float32)

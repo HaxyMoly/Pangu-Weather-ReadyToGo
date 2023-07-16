@@ -11,7 +11,7 @@ use_GPU = False
 date_time = datetime(
     year=2023, 
     month=7, 
-    day=9,
+    day=10,
     hour=23,
     minute=0)
 # time = '23:00'
@@ -21,7 +21,7 @@ date_time_final = datetime(
     year=2023, 
     month=7, 
     day=17,
-    hour=23,
+    hour=12,
     minute=0)
 
 final_result_dir = os.path.join(
@@ -45,7 +45,7 @@ model_1 = 'models/pangu_weather_1.onnx' # 1h
 forecast_dir = os.path.join(
     os.path.join(os.getcwd(), "forecasts"),
     ## replace to prevent invaild char ":"
-    date_time.strftime("%Y-%m-%d-%H-%M"),
+    date_time.strftime("%Y-%m-%d-%H-%M")
 )
 # Calculate the order of models should be used to generate the final result
 time_difference_in_hour = (date_time_final - date_time).total_seconds() / 3600
@@ -53,12 +53,10 @@ current_date_time = date_time
 last_date_time = None
 model_used = None
 start = True
-i = 0
 ort_session = None
 jump = False
 while time_difference_in_hour >= 1:
     print(time_difference_in_hour)
-    print(i)
     last_model = model_used
     if time_difference_in_hour >= 24:
         model_used = model_24
@@ -126,4 +124,3 @@ while time_difference_in_hour >= 1:
     np.save(os.path.join(final_result_dir, 'output_surface_' + current_date_time.strftime("%Y-%m-%d-%H-%M")), output_surface)
     last_date_time = current_date_time
     start = False
-    i += 1
