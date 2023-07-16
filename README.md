@@ -25,10 +25,14 @@ mkdir models
 ```
 
 ## Forecasting
-1. Modify the `date` and `time` of the initial field in `data_prepare.py`. You may check the data availability at a specific moment on [ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels).
+1. Modify the `date_time` of the initial field in `data_prepare.py`. You may check the data availability at a specific moment on [ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels).
 ```python
-date = '2023-07-02'
-time = '23:00'
+date_time = datetime(
+    year=2023, 
+    month=7, 
+    day=9,
+    hour=23,
+    minute=0)
 ```
 2. Run `data_prepare.py` to download the initial field data and convert them to numpy array.
 ```bash
@@ -40,23 +44,43 @@ python data_prepare.py
 use_GPU = True
 
 # The date and time of the initial field
-date = '2023-07-02'
-time = '23:00'
+date_time = datetime(
+    year=2023, 
+    month=7, 
+    day=9,
+    hour=23,
+    minute=0)
 
-# Uncomment the model to be used
-model_used = 'models/pangu_weather_24.onnx' # 24h
-# model_used = 'models/pangu_weather_6.onnx' # 6h
-# model_used = 'models/pangu_weather_3.onnx' # 3h
-# model_used = 'models/pangu_weather_1.onnx' # 1h
+# The date and time of the final approaches
+date_time_final = datetime(
+    year=2023, 
+    month=7, 
+    day=17,
+    hour=23,
+    minute=0)
+# Program auto choose model to use least interation to reach final time
 ```
 4. Execute `inference.py` to make forecast
 ```bash
 python inference.py
 ```
-5. Modify the date and time of the initial field in `forecast_decode.py`
+5. Modify the `date_time` and `final_date_time` of the initial field in `forecast_decode.py`
 ```python
-date = '2023-07-02'
-time = '23:00'
+# The date and time of the initial field
+date_time = datetime(
+    year=2023, 
+    month=7, 
+    day=9,
+    hour=23,
+    minute=0)
+
+# The date and time of the final approaches
+date_time_final = datetime(
+    year=2023, 
+    month=7, 
+    day=17,
+    hour=23,
+    minute=0)
 ```
 6. After making the forecast, run `forecast_decode.py` to convert the numpy array back to NetCDF format
 ```bash
@@ -64,7 +88,7 @@ python forecast_decode.py
 ```
 7. Navigate to the forecasting directory to visualize the results
 ```bash
-cd forecasts/2023-07-02-23:00
+cd outputs/2023-07-09-23-00to2023-07-17-23-00
 # Visualize the land surface forecast
 ncvue output_surface.nc
 # Visualize the upper air forecast
@@ -109,10 +133,14 @@ mkdir models
 ```
 
 ## 预测Demo
-1. 修改 `data_prepare.py` 中初始场的 `date`和 `time`，某时刻数据可用性可在 [ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels) 查询
+1. 修改 `data_prepare.py` 中初始场的 `date_time`，某时刻数据可用性可在 [ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels) 查询
 ```python
-date = '2023-07-02'
-time = '23:00'
+date_time = datetime(
+    year=2023, 
+    month=7, 
+    day=9,
+    hour=23,
+    minute=0)
 ```
 2. 执行 `data_prepare.py` 下载初始场数据并转换为npy格式
 ```bash
@@ -124,23 +152,41 @@ python data_prepare.py
 use_GPU = True
 
 # 初始场时刻
-date = '2023-07-02'
-time = '23:00'
-
-# 用哪个模型就去掉哪个的注释
-model_used = 'models/pangu_weather_24.onnx' # 24h
-# model_used = 'models/pangu_weather_6.onnx' # 6h
-# model_used = 'models/pangu_weather_3.onnx' # 3h
-# model_used = 'models/pangu_weather_1.onnx' # 1h
+date_time = datetime(
+    year=2023, 
+    month=7, 
+    day=9,
+    hour=23,
+    minute=0)
+# 目标到达时刻
+date_time_final = datetime(
+    year=2023, 
+    month=7, 
+    day=17,
+    hour=23,
+    minute=0)
+# 程式会自动选择最少到达目标时间的模型组合
 ```
 4. 执行 `inference.py` 进行预测
 ```bash
 python inference.py
 ```
-5. 修改 `forecast_decode.py` 中初始场时刻
+5. 修改 `forecast_decode.py` 中初始场时刻和目标到达时刻
 ```python
-date = '2023-07-02'
-time = '23:00'
+# 初始场时刻
+date_time = datetime(
+    year=2023, 
+    month=7, 
+    day=9,
+    hour=23,
+    minute=0)
+# 目标到达时刻
+date_time_final = datetime(
+    year=2023, 
+    month=7, 
+    day=17,
+    hour=23,
+    minute=0)
 ```
 6. 预测完成后，执行 `forecast_decode.py` 将npy转换回NetCDF格式
 ```bash
@@ -148,7 +194,7 @@ python forecast_decode.py
 ```
 7. 进入预测文件路径可视化结果
 ```bash
-cd forecasts/2023-07-02-23:00
+cd outputs/2023-07-09-23-00to2023-07-17-23-00
 # 可视化预测地表数据
 ncvue output_surface.nc
 # 或可视化预测大气数据

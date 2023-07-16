@@ -2,19 +2,23 @@ import cdsapi
 import numpy as np
 import netCDF4 as nc
 import os
+from datetime import datetime
 
 c = cdsapi.Client()
 
 # The date and time of the initial field
-date = '2023-07-02'
-time = '23:00'
+date_time = datetime(
+    year=2023, 
+    month=7, 
+    day=10,
+    hour=23,
+    minute=0)
 
 # The directory for forecastsd
 ## Use os.path.join to give cross platform compatibility
 forecast_dir = os.path.join(
     os.path.join(os.getcwd(), "forecasts"), 
-    ## replace to prevent invaild char ":"
-    date + "-" + time.replace(":", "-")
+    date_time.strftime("%Y-%m-%d-%H-%M"),
 )
 os.makedirs(forecast_dir)
 
@@ -33,10 +37,10 @@ c.retrieve('reanalysis-era5-single-levels', {
     'product_type': 'reanalysis',
     'format': 'netcdf',
     'variable': surface_variables,
-    'date': date,
-    'time': time,
+    'date': date_time.strftime("%Y-%m-%d"),
+    'time': date_time.strftime("%H:%M"),
     'area': area,
-}, forecast_dir + 'surface.nc')
+}, os.path.join(forecast_dir , 'surface.nc')
 
 # Download the upper air data
 c.retrieve('reanalysis-era5-pressure-levels', {
@@ -44,10 +48,10 @@ c.retrieve('reanalysis-era5-pressure-levels', {
     'format': 'netcdf',
     'variable': upper_variables,
     'pressure_level': pressure_levels,
-    'date': date,
-    'time': time,
+    'date': date_time.strftime("%Y-%m-%d"),
+    'time': date_time.strftime("%H:%M"),
     'area': area,
-}, forecast_dir + 'upper.nc')
+}, os.path.join(forecast_dir , 'upper.nc'))
 
 # Convert the surface data to npy
 surface_data = np.zeros((4, 721, 1440), dtype=np.float32)
