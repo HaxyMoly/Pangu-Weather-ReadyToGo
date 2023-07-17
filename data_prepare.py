@@ -55,7 +55,7 @@ c.retrieve('reanalysis-era5-pressure-levels', {
 
 # Convert the surface data to npy
 surface_data = np.zeros((4, 721, 1440), dtype=np.float32)
-with nc.Dataset(forecast_dir + 'surface.nc') as nc_file:
+with nc.Dataset(forecast_dir , 'surface.nc') as nc_file:
     surface_data[0] = nc_file.variables['msl'][:].astype(np.float32)
     surface_data[1] = nc_file.variables['u10'][:].astype(np.float32)
     surface_data[2] = nc_file.variables['v10'][:].astype(np.float32)
