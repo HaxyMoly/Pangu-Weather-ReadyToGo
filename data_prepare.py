@@ -10,7 +10,7 @@ c = cdsapi.Client()
 date_time = datetime(
     year=2023, 
     month=7, 
-    day=10,
+    day=11,
     hour=23,
     minute=0)
 
@@ -64,7 +64,7 @@ np.save(os.path.join(forecast_dir, 'input_surface.npy'), surface_data)
 
 # Convert the upper air data to npy
 upper_data = np.zeros((5, 13, 721, 1440), dtype=np.float32)
-with nc.Dataset(forecast_dir + 'upper.nc') as nc_file:
+with nc.Dataset(forecast_dir , 'upper.nc') as nc_file:
     upper_data[0] = (nc_file.variables['z'][:]).astype(np.float32)
     upper_data[1] = nc_file.variables['q'][:].astype(np.float32)
     upper_data[2] = nc_file.variables['t'][:].astype(np.float32)

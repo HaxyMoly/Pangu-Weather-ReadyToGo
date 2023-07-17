@@ -6,14 +6,14 @@ from forecast_decode_functions import surface, upper
 date_time = datetime(
     year=2023, 
     month=7, 
-    day=10,
+    day=11,
     hour=23,
     minute=0)
 date_time_final = datetime(
     year=2023,
     month=7,
     day=17,
-    hour=12,
+    hour=11,
     minute=0)
  
 # The directory for results forecast
