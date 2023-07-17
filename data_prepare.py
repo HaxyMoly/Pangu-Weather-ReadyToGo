@@ -10,7 +10,7 @@ c = cdsapi.Client()
 date_time = datetime(
     year=2023, 
     month=7, 
-    day=10,
+    day=11,
     hour=23,
     minute=0)
 
@@ -40,7 +40,7 @@ c.retrieve('reanalysis-era5-single-levels', {
     'date': date_time.strftime("%Y-%m-%d"),
     'time': date_time.strftime("%H:%M"),
     'area': area,
-}, os.path.join(forecast_dir , 'surface.nc')
+}, os.path.join(forecast_dir , 'surface.nc'))
 
 # Download the upper air data
 c.retrieve('reanalysis-era5-pressure-levels', {
@@ -55,7 +55,7 @@ c.retrieve('reanalysis-era5-pressure-levels', {
 
 # Convert the surface data to npy
 surface_data = np.zeros((4, 721, 1440), dtype=np.float32)
-with nc.Dataset(forecast_dir + 'surface.nc') as nc_file:
+with nc.Dataset(os.path.join(forecast_dir , 'surface.nc')) as nc_file:
     surface_data[0] = nc_file.variables['msl'][:].astype(np.float32)
     surface_data[1] = nc_file.variables['u10'][:].astype(np.float32)
     surface_data[2] = nc_file.variables['v10'][:].astype(np.float32)
@@ -64,7 +64,7 @@ np.save(os.path.join(forecast_dir, 'input_surface.npy'), surface_data)
 
 # Convert the upper air data to npy
 upper_data = np.zeros((5, 13, 721, 1440), dtype=np.float32)
-with nc.Dataset(forecast_dir + 'upper.nc') as nc_file:
+with nc.Dataset(os.path.join(forecast_dir , 'upper.nc')) as nc_file:
     upper_data[0] = (nc_file.variables['z'][:]).astype(np.float32)
     upper_data[1] = nc_file.variables['q'][:].astype(np.float32)
     upper_data[2] = nc_file.variables['t'][:].astype(np.float32)

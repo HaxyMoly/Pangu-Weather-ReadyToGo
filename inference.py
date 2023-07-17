@@ -11,7 +11,7 @@ use_GPU = False
 date_time = datetime(
     year=2023, 
     month=7, 
-    day=10,
+    day=11,
     hour=23,
     minute=0)
 # time = '23:00'
@@ -21,7 +21,7 @@ date_time_final = datetime(
     year=2023, 
     month=7, 
     day=17,
-    hour=12,
+    hour=11,
     minute=0)
 
 final_result_dir = os.path.join(
