@@ -25,7 +25,8 @@ mkdir models
 ```
 
 ## Forecasting
-1. Modify the `date_time` of the initial field in `data_prepare.py`. You may check the data availability at a specific moment on [ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels).
+
+1. Modify the `date_time` of the initial field in `data_prepare.py`. 
 ```python
 date_time = datetime(
     year=2023, 
@@ -34,6 +35,8 @@ date_time = datetime(
     hour=23,
     minute=0)
 ```
+> You may check the data availability at a specific moment by using `test_avaliable_time.py`.You would get something like this:
+> `The latest date available for this dataset is: 2023-07-13 13:00.`
 2. Run `data_prepare.py` to download the initial field data and convert them to numpy array.
 ```bash
 python data_prepare.py
@@ -133,7 +136,7 @@ mkdir models
 ```
 
 ## 预测Demo
-1. 修改 `data_prepare.py` 中初始场的 `date_time`，某时刻数据可用性可在 [ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels) 查询
+1. 修改 `data_prepare.py` 中初始场的 `date_time`，
 ```python
 date_time = datetime(
     year=2023, 
@@ -142,6 +145,8 @@ date_time = datetime(
     hour=23,
     minute=0)
 ```
+> 某时刻数据可用性可运行 `test_avaliable_time.py` 来查询.你的输出会是这样的:
+> `The latest date available for this dataset is: 2023-07-13 13:00.`
 2. 执行 `data_prepare.py` 下载初始场数据并转换为npy格式
 ```bash
 python data_prepare.py
