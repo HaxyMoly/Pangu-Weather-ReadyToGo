@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from typing import List
 
 from .extent import Extent
+from .reply import Reply
 
 
 class Client:
@@ -145,7 +146,7 @@ class Client:
         dates, times = self.__generate_download_timestamp()
 
         # download surface data
-        self.__cds_client.retrieve("reanalysis-era5-single-levels", {
+        r = self.__cds_client.retrieve("reanalysis-era5-single-levels", {
             "product_type": "reanalysis",
             "format": "netcdf",
             "variable": self.surface_variables,
@@ -153,9 +154,13 @@ class Client:
             "date": dates,
             "time": times,
             "area": self.extent.to_list,
-        }, target=str(self.output_dir.joinpath("surface.nc")))
+        })
+
+        # download asynchronously
+        Reply(r).download(str(self.output_dir.joinpath("surface.nc")))
 
         # download upper air data
+        # follow the same order with surface data
         self.__cds_client.retrieve("reanalysis-era5-pressure-levels", {
             "product_type": "reanalysis",
             "format": "netcdf",
@@ -164,4 +169,7 @@ class Client:
             "date": dates,
             "time": times,
             "area": self.extent.to_list,
-        }, target=str(self.output_dir.joinpath("upper.nc")))
+        })
+
+        # download asynchronously
+        Reply(r).download(str(self.output_dir.joinpath("upper.nc")))
